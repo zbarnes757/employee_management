@@ -12,8 +12,11 @@ fn start_program(company: &mut HashMap<String, Vec<String>>) {
 
     match initial_input.as_ref() {
       "1" => {
-        let (department, employee) = get_employee_to_add();
-        add_employee_to_department(company, department, employee);
+        if let Some((employee, department)) = get_employee_to_add() {
+          add_employee_to_department(company, department, employee);
+        } else {
+          println!("Invalid format!")
+        }
       }
       "2" => {
         let department = ask_for_department();
@@ -45,7 +48,7 @@ fn present_options() -> String {
   user_input.trim().to_string()
 }
 
-fn get_employee_to_add() -> (String, String) {
+fn get_employee_to_add() -> Option<(String, String)> {
   let mut user_input = String::new();
 
   println!("Use the format: Add _name_ to _department_");
@@ -54,12 +57,15 @@ fn get_employee_to_add() -> (String, String) {
     .read_line(&mut user_input)
     .expect("Unable to read line");
 
-  // TODO: handle when input is invalid
   let string_array: Vec<&str> = user_input.split(" ").collect();
-  (
-    string_array[3].trim().to_string(),
-    string_array[1].trim().to_string(),
-  )
+  if string_array.len() != 4 {
+    None
+  } else {
+    Some((
+      string_array[3].trim().to_string(),
+      string_array[1].trim().to_string(),
+    ))
+  }
 }
 
 fn add_employee_to_department(
