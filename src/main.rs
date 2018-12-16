@@ -5,10 +5,6 @@ use crate::questions::Questioner;
 
 fn main() {
   let mut company = Company::new();
-  start_program(&mut company)
-}
-
-fn start_program(company: &mut Company) {
   loop {
     let initial_input = Questioner::present_options();
 
