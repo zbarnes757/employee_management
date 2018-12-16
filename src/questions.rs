@@ -1,8 +1,8 @@
 use std::io;
 
-pub struct Questions {}
+pub struct Questioner {}
 
-impl Questions {
+impl Questioner {
   pub fn present_options() -> String {
     let mut user_input = String::new();
 
