@@ -12,5 +12,5 @@ Then just use `cargo run`. Easy, peasy.
 # Learning Goals
 
 - [ ] Tests
-- [ ] Modular system
-- [ ] Structs and OOP
+- [x] Modular system
+- [x] Structs and OOP

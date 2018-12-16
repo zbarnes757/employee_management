@@ -1,28 +1,27 @@
-use std::collections::HashMap;
-use std::io;
+mod company;
+mod questions;
+use crate::company::Company;
+use crate::questions::Questions;
 
 fn main() {
-  let mut company = HashMap::new();
+  let mut company = Company::new();
   start_program(&mut company)
 }
 
-fn start_program(company: &mut HashMap<String, Vec<String>>) {
+fn start_program(company: &mut Company) {
   loop {
-    let initial_input = present_options();
+    let initial_input = Questions::present_options();
 
     match initial_input.as_ref() {
-      "1" => {
-        if let Some((employee, department)) = get_employee_to_add() {
-          add_employee_to_department(company, department, employee);
-        } else {
-          println!("Invalid format!")
-        }
-      }
+      "1" => match Questions::get_employee_to_add() {
+        Ok((employee, department)) => company.add_employee_to_department(department, employee),
+        Err(message) => println!("{}", message),
+      },
       "2" => {
-        let department = ask_for_department();
-        print_employees_in_department(company, department);
+        let department = Questions::ask_for_department();
+        company.print_employees_in_department(department);
       }
-      "3" => print_all_employees(company),
+      "3" => company.print_all_employees(),
       "4" => {
         println!("Goodbye!");
         break;
@@ -30,81 +29,4 @@ fn start_program(company: &mut HashMap<String, Vec<String>>) {
       _ => println!("Invalid option. Try again."),
     }
   }
-}
-
-fn present_options() -> String {
-  let mut user_input = String::new();
-
-  println!("Please select the option you would like to do (number only!):");
-  println!("1. Add employee to department");
-  println!("2. Print all employees in a department");
-  println!("3. Print all employees in the company");
-  println!("4. Exit program");
-
-  io::stdin()
-    .read_line(&mut user_input)
-    .expect("Unable to read line");
-
-  user_input.trim().to_string()
-}
-
-fn get_employee_to_add() -> Option<(String, String)> {
-  let mut user_input = String::new();
-
-  println!("Use the format: Add _name_ to _department_");
-
-  io::stdin()
-    .read_line(&mut user_input)
-    .expect("Unable to read line");
-
-  let string_array: Vec<&str> = user_input.split(" ").collect();
-  if string_array.len() != 4 {
-    None
-  } else {
-    Some((
-      string_array[3].trim().to_string(),
-      string_array[1].trim().to_string(),
-    ))
-  }
-}
-
-fn add_employee_to_department(
-  company: &mut HashMap<String, Vec<String>>,
-  department: String,
-  employee: String,
-) {
-  let department = company.entry(department).or_insert(Vec::new());
-  department.push(employee);
-}
-
-fn ask_for_department() -> String {
-  let mut user_input = String::new();
-
-  println!("Which department?");
-
-  io::stdin()
-    .read_line(&mut user_input)
-    .expect("Unable to read line");
-
-  user_input.trim().to_string()
-}
-
-fn print_employees_in_department(company: &mut HashMap<String, Vec<String>>, department: String) {
-  match company.get(&department) {
-    Some(department_list) => println!("{}", department_list.join(", ")),
-    None => println!("No one in that department!"),
-  }
-}
-
-fn print_all_employees(company: &mut HashMap<String, Vec<String>>) {
-  let mut employee_list: Vec<String> = Vec::new();
-
-  for (_, value) in company {
-    employee_list.extend(value.iter().cloned());
-  }
-
-  employee_list.sort();
-  employee_list.dedup();
-
-  println!("{}", employee_list.join(", "))
 }
