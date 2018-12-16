@@ -8,3 +8,9 @@ I will likely be adding more and more as my understanding of Rust improves.
 Make sure you have Rust [installed](https://www.rust-lang.org/tools/install).
 
 Then just use `cargo run`. Easy, peasy.
+
+# Learning Goals
+
+- [ ] Tests
+- [ ] Modular system
+- [ ] Structs and OOP
