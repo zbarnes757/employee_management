@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 pub struct Company {
-  pub departments: HashMap<String, Vec<String>>,
+  departments: HashMap<String, Vec<String>>,
 }
 
 impl Company {
@@ -38,4 +38,21 @@ impl Company {
 
     println!("{}", employee_list.join(", "))
   }
+}
+
+#[test]
+fn test_add_employee_to_department() {
+  let mut company = Company {
+    departments: HashMap::new(),
+  };
+
+  let department = String::from("mspf");
+  let employee = String::from("zac");
+
+  company.add_employee_to_department(department, employee);
+
+  let result = company.departments.get(&String::from("mspf"));
+
+  assert!(result.is_some());
+  assert!(result.unwrap().contains(&String::from("zac")));
 }
