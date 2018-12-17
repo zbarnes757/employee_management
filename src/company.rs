@@ -41,7 +41,7 @@ impl Company {
 }
 
 #[test]
-fn test_add_employee_to_department() {
+fn add_employee_to_department() {
   let mut company = Company {
     departments: HashMap::new(),
   };

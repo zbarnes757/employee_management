@@ -74,7 +74,7 @@ where
 }
 
 #[test]
-fn test_get_employee_to_add() {
+fn get_employee_with_valid_format() {
   let input = b"Add zac to mspf";
   let output = Vec::new();
 
@@ -84,7 +84,10 @@ fn test_get_employee_to_add() {
 
   assert!(result.is_ok());
   assert_eq!(result.unwrap(), (String::from("zac"), String::from("mspf")));
+}
 
+#[test]
+fn unable_to_process_get_employee_with_bad_data() {
   let input = b"not_valid";
   let output = Vec::new();
 
@@ -95,7 +98,7 @@ fn test_get_employee_to_add() {
 }
 
 #[test]
-fn test_ask_for_department() {
+fn ask_for_department() {
   let input = b"mspf";
   let output = Vec::new();
 
