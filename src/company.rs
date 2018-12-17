@@ -40,19 +40,25 @@ impl Company {
   }
 }
 
-#[test]
-fn add_employee_to_department() {
-  let mut company = Company {
-    departments: HashMap::new(),
-  };
+#[cfg(test)]
+mod tests {
+  use super::*;
 
-  let department = String::from("mspf");
-  let employee = String::from("zac");
+  #[test]
+  fn add_employee_to_department() {
+    let mut company = Company {
+      departments: HashMap::new(),
+    };
 
-  company.add_employee_to_department(department, employee);
+    let department = String::from("mspf");
+    let employee = String::from("zac");
 
-  let result = company.departments.get(&String::from("mspf"));
+    company.add_employee_to_department(department, employee);
 
-  assert!(result.is_some());
-  assert!(result.unwrap().contains(&String::from("zac")));
+    let result = company.departments.get(&String::from("mspf"));
+
+    assert!(result.is_some());
+    assert!(result.unwrap().contains(&String::from("zac")));
+  }
+
 }

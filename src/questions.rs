@@ -73,38 +73,52 @@ where
   }
 }
 
-#[test]
-fn get_employee_with_valid_format() {
-  let input = b"Add zac to mspf";
-  let output = Vec::new();
+#[cfg(test)]
+mod tests {
+  use super::*;
 
-  let mut questioner = Questioner::new(&input[..], output);
+  #[test]
+  fn get_employee_with_valid_format() {
+    let input = b"Add zac to mspf";
+    let output = Vec::new();
 
-  let result = questioner.get_employee_to_add();
+    let mut questioner = Questioner {
+      reader: &input[..],
+      writer: output,
+    };
 
-  assert!(result.is_ok());
-  assert_eq!(result.unwrap(), (String::from("zac"), String::from("mspf")));
-}
+    let result = questioner.get_employee_to_add();
 
-#[test]
-fn unable_to_process_get_employee_with_bad_data() {
-  let input = b"not_valid";
-  let output = Vec::new();
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), (String::from("zac"), String::from("mspf")));
+  }
 
-  let mut questioner = Questioner::new(&input[..], output);
+  #[test]
+  fn unable_to_process_get_employee_with_bad_data() {
+    let input = b"not_valid";
+    let output = Vec::new();
 
-  let result = questioner.get_employee_to_add();
-  assert!(result.is_err());
-}
+    let mut questioner = Questioner {
+      reader: &input[..],
+      writer: output,
+    };
 
-#[test]
-fn ask_for_department() {
-  let input = b"mspf";
-  let output = Vec::new();
+    let result = questioner.get_employee_to_add();
+    assert!(result.is_err());
+  }
 
-  let mut questioner = Questioner::new(&input[..], output);
+  #[test]
+  fn ask_for_department() {
+    let input = b"mspf";
+    let output = Vec::new();
 
-  let result = questioner.ask_for_department();
+    let mut questioner = Questioner {
+      reader: &input[..],
+      writer: output,
+    };
 
-  assert_eq!(result, String::from("mspf"));
+    let result = questioner.ask_for_department();
+
+    assert_eq!(result, String::from("mspf"));
+  }
 }
