@@ -33,8 +33,8 @@ impl Questioner {
       Err(String::from("Invalid format!"))
     } else {
       Ok((
-        string_array[3].trim().to_string(),
         string_array[1].trim().to_string(),
+        string_array[3].trim().to_string(),
       ))
     }
   }
